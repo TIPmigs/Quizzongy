@@ -93,12 +93,12 @@ WSGI_APPLICATION = 'Quizzong.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql', 
-        'NAME': 'Quizzong',               
-        'USER': 'root',                        
-        'PASSWORD': '',                        
-        'HOST': '127.0.0.1',                   
-        'PORT': '3306',                      
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'quizzong_db',  # The name of the database you just created
+        'USER': 'miguel',       # The PostgreSQL username
+        'PASSWORD': '123',      # The password you set for the user
+        'HOST': 'localhost',    # Use 'localhost' or the IP address of the database server
+        'PORT': '5432',         # The default PostgreSQL port
     }
 }
 
