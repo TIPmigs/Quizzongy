@@ -1,0 +1,171 @@
+{% extends 'Authbase.html' %}
+{% load static %}
+
+{% block title %}Login - Quizzong{% endblock %}
+
+{% block content %}
+<style>
+    body {
+      background-color: #d6ccbc;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .login-container {
+      margin: 5vh auto;
+      max-width: 900px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .login-left {
+      background-color: #4a444a;
+      color: white;
+      padding: 40px 30px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .login-left h1 {
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+
+    .login-left .social-btn {
+        background-color: #fff6e5;
+        border: none;
+        border-radius: 10px;
+        margin: 10px 0;
+        padding: 10px;
+        width: 100%;
+        display: flex;
+        align-items: center;  /* Vertically center the image and text */
+        font-weight: 500;
+        color: #4a444a;
+        justify-content: flex-start;  /* Aligns the image to the left */
+        text-decoration: none;
+        transition: ease-in-out 0.3s;
+    }
+
+    .social-btn:hover{
+        transform: scale(1.1);
+    }
+
+        .login-left .social-btn span {
+        flex-grow: 1; 
+        text-align: center;  
+        display: block; 
+        margin: 0; 
+        padding: 0; 
+    }
+
+        .login-left .social-btn img {
+        width: 20px;
+    }
+
+    .login-right {
+      background-color: #fff6e5;
+      padding: 40px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .login-right h2 {
+      font-weight: bold;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    .login-right input[type="text"],
+    .login-right input[type="password"] {
+      border: none;
+      border-radius: 10px;
+      padding: 12px 20px;
+      background-color: white;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .form-check-input {
+      width: 18px;
+      height: 18px;
+      margin-top: 5px;
+      margin-right: 8px;
+    }
+
+    .login-btn {
+      background-color: #4a444a;
+      color: #fff6e5;
+      border: none;
+      border-radius: 10px;
+      padding: 12px;
+      width: 100%;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .login-btn:hover {
+      background-color: orange;
+      transform: scale(1.03);
+    }
+
+    @media (max-width: 768px) {
+      .login-left, .login-right {
+        padding: 30px 20px;
+      }
+
+      .login-left {
+        text-align: center;
+      }
+    }
+</style>
+
+<div class="container login-container">
+    <div class="row g-0">
+      <!-- Left: Social Login -->
+      <div class="col-md-5 login-left d-flex flex-column justify-content-center">
+        <h1>Quizzong</h1>
+        <h5>Login with</h5>
+        <a href="#" class="social-btn">
+            <img src="{% static 'images/google-icon.png' %}" alt="G" width="20">
+            <span>Google</span>
+          </a>
+          
+          <a href="{% url 'social:begin' 'github' %}?auth_type=rerequest" class="social-btn">
+            <img src="{% static 'images/github-icon.png' %}" alt="GitHub" width="20">
+            <span>GitHub</span>
+          </a>
+          
+          <a href="#" class="social-btn">
+            <img src="{% static 'images/facebook-icon.png' %}" alt="Facebook" width="20">
+            <span>Facebook</span>
+          </a>
+      </div>
+  
+      <!-- Right: Login Form -->
+        <div class="col-md-7 login-right">
+            <h2 class="mb-2">Login to your Account</h2>
+            <p style="color: black;">Don’t have an account? <a href="{% url 'register' %}" class="text-primary">Sign-up</a></p>
+            <form method="POST" action="{% url 'login' %}">
+                {% csrf_token %}
+                
+                {% if error %}
+                    <div class="text-danger mb-2">{{ error }}</div>
+                {% endif %}
+              
+                <input type="text" name="username" placeholder="Username" value="{{ form.username }}" required>
+              
+                <input type="password" name="password" placeholder="Password" required>
+              
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <div class="form-check d-flex align-items-center">
+                    <input type="checkbox" class="form-check-input" id="remember">
+                    <label class="form-check-label" for="remember">remember me</label>
+                  </div>
+                  <a href="#" class="text-primary">Forgot Password</a>
+                </div>
+              
+                <button type="submit" class="login-btn">Login</button>
+              </form>
+        </div>
+    </div>
+  </div>
+
+{% endblock %}

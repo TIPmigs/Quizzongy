@@ -1,0 +1,138 @@
+{% extends "Authbase.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+    .register-container {
+        margin: 5vh auto;
+        max-width: 900px;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .register-left {
+        background-color: #4a444a;
+        color: white;
+        padding: 40px 30px;
+        text-align: center;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .register-left h1 {
+        font-weight: bold;
+        margin-bottom: 30px;
+    }
+
+    .register-left p {
+        font-size: 1rem;
+        color: #f0eaea;
+        margin-top: 20px;
+    }
+
+    .register-right {
+        background-color: #fff6e5;
+        padding: 40px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .register-right h2 {
+        font-weight: bold;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    .register-right input {
+        border: none;
+        border-radius: 10px;
+        padding: 12px 20px;
+        background-color: white;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .register-btn {
+        background-color: #4a444a;
+        color: #fff6e5;
+        border: none;
+        border-radius: 10px;
+        padding: 12px;
+        width: 100%;
+        font-weight: bold;
+        transition: all 0.3s ease;
+    }
+
+    .register-btn:hover {
+        background-color: orange;
+        transform: scale(1.03);
+    }
+
+    .login-redirect {
+        text-align: center;
+        margin-top: 15px;
+    }
+
+    @media (max-width: 768px) {
+        .register-left, .register-right {
+            padding: 30px 20px;
+        }
+
+        .register-left {
+            text-align: center;
+        }
+    }
+</style>
+
+<div class="container register-container">
+    <div class="row g-0">
+        <!-- Left Info Panel -->
+        <div class="col-md-5 register-left d-flex flex-column justify-content-center">
+            <h1>Welcome!</h1>
+            <p>Create your Quizzong account and start your journey of gamified learning!</p>
+        </div>
+
+        <!-- Right Form Panel -->
+        <div class="col-md-7 register-right">
+            <h2 class="mb-2">Create an Account</h2>
+            <p class="text-muted">Please fill in the form to register.</p>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-success" role="alert">
+                    {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            <form method="POST" action="{% url 'register' %}">
+                {% csrf_token %}
+              
+                {% if form.non_field_errors %}
+                  <div class="text-danger mb-2">{{ form.non_field_errors.0 }}</div>
+                {% endif %}
+              
+                <input type="text" name="username" placeholder="Username" value="{{ form.username.value|default_if_none:'' }}" required>
+                {% if form.username.errors %}
+                  <div class="text-danger">{{ form.username.errors.0 }}</div>
+                {% endif %}
+              
+                <input type="email" name="email" placeholder="Email" value="{{ form.email.value|default_if_none:'' }}" required>
+                {% if form.email.errors %}
+                  <div class="text-danger">{{ form.email.errors.0 }}</div>
+                {% endif %}
+              
+                <input type="password" name="password1" placeholder="Password" required>
+                {% if form.password1.errors %}
+                  <div class="text-danger">{{ form.password1.errors.0 }}</div>
+                {% endif %}
+              
+                <input type="password" name="password2" placeholder="Confirm Password" required>
+                {% if form.password2.errors %}
+                  <div class="text-danger">{{ form.password2.errors.0 }}</div>
+                {% endif %}
+              
+                <button type="submit" class="register-btn">Register</button>
+              </form>
+              <div class="login-redirect">
+                Already have an account? <a href="{% url 'login' %}">Login</a>
+              </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
