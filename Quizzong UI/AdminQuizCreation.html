@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin's View</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.cdnfonts.com/css/pixelion" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <style>
+    @font-face {
+      font-family: 'Pixelion';
+      src: url('font/Pixelon-E4JEg.otf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    body {
+      font-family: 'Pixelion', sans-serif;
+      background-color: #fff6e5;
+      color: #4a444a;
+    }
+
+    .header {
+      background-color: #4a444a;
+      color: white;
+      padding: 1rem 2rem;
+      border-bottom: 5px solid #4a444a;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .avatar {
+      background-color: #4a444a;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff7f0;
+      font-size: 1.2rem;
+    }
+
+    .course-card {
+      border-radius: 1rem;
+      padding: 2rem 0;
+      margin-top: 1rem;
+    }
+
+    .custom-bg {
+    background-color: #e8e0d9;
+    }
+
+    .btn-color {
+      background-color: #4a444a;
+      color: #fff6e5;
+      font-weight: bold;
+      border-radius: 1rem;
+      padding: 0.6rem 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .btn-color:hover {
+      opacity: 0.9;
+    }
+
+    input, textarea {
+      width: 100%;
+      margin-bottom: 1rem;
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      border: 1px solid #ccc;
+      background-color: #e8e0d9;
+    }
+
+    .add-question-btn {
+      background-color: #4a444a;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      margin-right: 0.5rem;
+    }
+
+    .remove-question-btn {
+      background-color: #4a444a;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+    }
+
+    .submit-btn{
+      background-color: #4a444a;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+    }
+
+    .dashed {
+      border-top: 2px dashed #4a444a;
+      padding-top: 1rem;
+    }
+
+    select.form-control {
+      background-color: #e8e0d9;
+      border-radius: 0.5rem;
+      border: 1px solid #ccc;
+      margin-bottom: 1rem;
+      padding: 0.5rem;
+    }
+
+    .form-control {
+      background-color: #e8e0d9; 
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h4 class="mb-0">Admin's View</h4>
+    <div class="avatar">
+      <i class="bi bi-person-fill"></i>
+    </div>
+  </div>
+
+  <div class="container mt-4">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="course-card">
+        <label for="title">Title:</label>
+        <input type="text" id="title" placeholder="Enter title here">
+        
+        <label for="description">Description / Instruction:</label>
+        <textarea id="description" rows="5" placeholder="Enter details here..."></textarea>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="course-card">
+        <label for="available">Available:</label>
+        <input type="text" id="available" placeholder="Enter availability">
+
+        <label for="due">Due Date:</label>
+        <input type="date" id="due">
+
+        <label for="time-limit">Time Limit:</label>
+        <input type="text" id="time-limit" placeholder="Enter time limit">
+      </div>
+    </div>
+  </div>
+
+  <div class="dashed"></div>
+
+  <div class="question">
+    <div class="container mt-4">
+      <div class="row">
+        <div class="col-md-6">
+          <!--Short/Long Answer-->
+          <label for="question-type">Question Type:</label>
+          <select id="question-type" class="form-control">
+            <option value="long">Long Answer</option>
+            <option value="multiple">Multiple Choice</option>
+            <option value="short">Short Answer</option>
+          </select>
+          
+        <textarea id="description" rows="5" placeholder="The Question"></textarea>
+        <label for="points">Points:</label>
+        <input type="text" id="points" placeholder="Points">
+        
+        <div class="dashed"></div>
+        
+          <!--Multiple Choice-->
+        <label for="question-type">Question Type:</label>
+          <select id="question-type" class="form-control">
+            <option value="multiple">Multiple Choice</option>
+            <option value="long">Long Answer</option>
+            <option value="short">Short Answer</option>
+          </select>
+          
+          <div class="multiple-choice-section mt-3">
+          <div id="choices-container">
+            <div class="form-group d-flex align-items-center mt-2">
+              <input type="text" class="form-control" placeholder="Enter option A">
+            </div>
+            <div class="form-group d-flex align-items-center mt-2">
+              <input type="text" class="form-control" placeholder="Enter option B">
+            </div>
+          </div>
+          <div class="d-flex justify-content-end text">
+            <button type="button" class="add-question-btn" onclick="addChoice()">+ Add Option</button>
+          </div>
+          </div>
+
+          <label for="points">Points:</label>
+          <input type="text" id="points" placeholder="Points">
+
+          <div class="d-flex justify-content-end mt-2">
+            <button class="add-question-btn">Add Question</button>
+            <button class="remove-question-btn">Remove Question</button>
+          </div>
+
+        </div>
+
+        <div class="col-md-6">
+
+          <label for="question-type">Order of the Quiz:</label>
+          <select id="question-type" class="form-control">
+            <option value="multiple">Ordered</option>
+            <option value="long">Shuffled</option>
+          </select>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="dashed" style="margin: 1rem;"></div>
+
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-6">
+    </div>
+
+      <div class="col-md-6 d-flex flex-column justify-content-end" style="height: 100%; padding-bottom: 10px;">
+        <div class="d-flex justify-content-end mt-2">
+          <button class="submit-btn">Publish Quiz</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+  
+    let choiceIndex = 2;
+
+    function addChoice() {
+      const container = document.getElementById('choices-container');
+      const letter = String.fromCharCode(65 + choiceIndex);
+      const div = document.createElement('div');
+      div.className = 'form-group d-flex align-items-center mt-2';
+      div.innerHTML = `
+        <input type="text" class="form-control mr-2" placeholder="Enter option ${letter}">`;
+      container.appendChild(div);
+      choiceIndex++;
+    }
+
+    function removeChoice(button) {
+      const choiceDiv = button.parentElement;
+      choiceDiv.remove();
+    }
+  </script>
+
+</body>
+</html>
