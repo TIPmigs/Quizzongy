@@ -3,7 +3,7 @@ from django.contrib.auth import logout, authenticate, login
 from social_django.models import UserSocialAuth
 import requests 
 from django.conf import settings
-from .forms import CustomUserRegisterForm, CustomLoginForm
+from .forms import CustomUserRegisterForm, CustomLoginForm, QuizForm
 from django.contrib import messages
 from django.http import HttpResponse
 from django.urls import reverse
@@ -77,3 +77,19 @@ def custom_login_view(request):
             })
 
     return render(request, 'authentication/login.html', {'form': {}})
+
+# CREATE QUIZ (UNDER DEVELOPMENT)
+def create_quiz(request):
+    if request.method == 'POST':
+        
+        quiz_form = QuizForm(request.POST)
+        print(quiz_form)
+        if quiz_form.is_valid():
+            quiz = quiz_form.save()
+            return redirect('quiz/create')
+    else:
+        quiz_form = QuizForm()
+
+    return render(request, 'quiz/create_quiz.html', {
+        'quiz_form': quiz_form,
+    })
