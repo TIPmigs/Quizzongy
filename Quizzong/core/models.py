@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
+from django.core.exceptions import ValidationError
 
 # Create a custom UserManager to manage the user creation
 class CustomUserManager(BaseUserManager):
@@ -45,3 +46,77 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.username
+
+class Quiz(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    available_from = models.DateTimeField()
+    available_until = models.DateTimeField()
+    due_date = models.DateTimeField()
+    time_limit = models.DurationField()
+    created_at = models.DateTimeField(auto_now_add=True)  # Tracks when the quiz is created
+    updated_at = models.DateTimeField(auto_now=True)  # Tracks when the quiz is last updated
+
+    class Meta():
+        verbose_name = "Quiz"
+        verbose_name_plural = "Quizzes"
+
+    def clean(self):
+        if self.available_from > self.due_date:
+            raise ValidationError("'Available from' cannot be after the due date.")
+        if self.available_until < self.due_date:
+            raise ValidationError("'Available until' cannot be before the due date.")
+
+    @property
+    def total_points(self):
+        return sum(
+            question.points for question in
+            list(self.shortanswerquestion_set.all()) +
+            list(self.longanswerquestion_set.all()) +
+            list(self.multiplechoicequestion_set.all())
+        )
+
+    def __str__(self):
+        return self.title
+
+
+class BaseQuestion(models.Model):
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
+    text = models.TextField()
+    points = models.PositiveIntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)  # Tracks when the question is created
+    updated_at = models.DateTimeField(auto_now=True)  # Tracks when the question is last updated
+
+    class Meta:
+        abstract = True
+
+    def __str__(self):
+        return f"{self.text[:50]} ({self.points} pts)"
+
+
+class ShortAnswerQuestion(BaseQuestion):
+    pass
+
+
+class LongAnswerQuestion(BaseQuestion):
+    pass
+
+
+class MultipleChoiceQuestion(BaseQuestion):
+    def clean(self):
+        if self.pk:
+            if not self.choices.filter(is_correct=True).exists():
+                raise ValidationError("At least one option must be marked correct.")
+
+
+class Option(models.Model):
+    question = models.ForeignKey(
+        MultipleChoiceQuestion,
+        related_name='choices',
+        on_delete=models.CASCADE
+    )
+    text = models.CharField(max_length=255)
+    is_correct = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.text
