@@ -50,7 +50,7 @@ INSTALLED_APPS = [
 ]
 
 STATICFILES_DIRS = [
-    BASE_DIR / "core/static", 
+    BASE_DIR / "static", 
 ]
 
 MIDDLEWARE = [
