@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import pymysql
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
 
 pymysql.install_as_MySQLdb()
 
@@ -42,10 +46,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'social_django',
     'core',
+    'quizzes',
 ]
 
 STATICFILES_DIRS = [
-    BASE_DIR / "core/static", 
+    BASE_DIR / "static", 
 ]
 
 MIDDLEWARE = [
@@ -71,7 +76,9 @@ AUTH_USER_MODEL = 'core.CustomUser'  # Replace 'core' with your app name
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            BASE_DIR / 'templates',
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -94,14 +101,13 @@ WSGI_APPLICATION = 'Quizzong.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'quizzong_db',  # The name of the database you just created
-        'USER': 'miguel',       # The PostgreSQL username
-        'PASSWORD': '123',      # The password you set for the user
-        'HOST': 'localhost',    # Use 'localhost' or the IP address of the database server
-        'PORT': '5432',         # The default PostgreSQL port
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST', 'localhost'),
+        'PORT': os.getenv('DB_PORT', '5432'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators

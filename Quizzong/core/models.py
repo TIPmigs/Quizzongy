@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
 from django.core.exceptions import ValidationError
+from django.urls import reverse
 
 # Create a custom UserManager to manage the user creation
 class CustomUserManager(BaseUserManager):
@@ -46,26 +47,3 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.username
-
-class Quiz(models.Model):
-    title = models.CharField(max_length=200)
-    description = models.TextField()
-    available_from = models.DateTimeField()
-    available_until = models.DateTimeField()
-    due_date = models.DateTimeField()
-    time_limit = models.DurationField()
-    created_at = models.DateTimeField(auto_now_add=True)  # Tracks when the quiz is created
-    updated_at = models.DateTimeField(auto_now=True)  # Tracks when the quiz is last updated
-
-    class Meta():
-        verbose_name = "Quiz"
-        verbose_name_plural = "Quizzes"
-
-    def clean(self):
-        if self.available_from > self.due_date:
-            raise ValidationError("'Available from' cannot be after the due date.")
-        if self.available_until < self.due_date:
-            raise ValidationError("'Available until' cannot be before the due date.")
-
-    def __str__(self):
-        return self.title
