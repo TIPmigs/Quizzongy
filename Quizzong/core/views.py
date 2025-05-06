@@ -3,7 +3,7 @@ from django.contrib.auth import logout, authenticate, login
 from social_django.models import UserSocialAuth
 import requests 
 from django.conf import settings
-from .forms import CustomUserRegisterForm, CustomLoginForm, QuizForm
+from .forms import CustomUserRegisterForm, CustomLoginForm
 from django.contrib import messages
 from django.http import HttpResponse
 from django.urls import reverse
