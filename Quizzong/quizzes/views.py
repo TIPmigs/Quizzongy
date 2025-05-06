@@ -1,12 +1,15 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from django.forms.models import modelformset_factory # model form for querysets
 from .forms import QuizForm, QuestionForm, OptionForm
 from .models import Quiz, Question, Option
 
+@login_required
 def quiz_list_view(request):
     return
 
 # QUIZ ADMIN (UNDER DEVELOPMENT)
+@login_required
 def admin_quiz_create_view(request):
     quiz_form = QuizForm(request.POST or None)
     QuestionFormset = modelformset_factory(Question, form=QuestionForm, extra=1)
@@ -30,6 +33,7 @@ def admin_quiz_create_view(request):
 
     return render(request, 'quiz/create_update_quiz.html', context)
 
+@login_required
 def admin_quiz_update_view(request, id=None):
     quiz = get_object_or_404(Quiz, id=id)
     quiz_form = QuizForm(request.POST or None, instance=quiz)
@@ -52,5 +56,6 @@ def admin_quiz_update_view(request, id=None):
         context['message'] = 'Data saved.'
     return render(request, "quiz/create_update_quiz.html",  context)
 
+@login_required
 def quiz_update_view():
     return
