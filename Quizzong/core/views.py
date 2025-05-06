@@ -77,19 +77,3 @@ def custom_login_view(request):
             })
 
     return render(request, 'authentication/login.html', {'form': {}})
-
-# CREATE QUIZ (UNDER DEVELOPMENT)
-def create_quiz(request):
-    if request.method == 'POST':
-        
-        quiz_form = QuizForm(request.POST)
-        print(quiz_form)
-        if quiz_form.is_valid():
-            quiz = quiz_form.save()
-            return redirect('quiz/create')
-    else:
-        quiz_form = QuizForm()
-
-    return render(request, 'quiz/create_quiz.html', {
-        'quiz_form': quiz_form,
-    })
