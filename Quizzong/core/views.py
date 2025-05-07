@@ -8,6 +8,7 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.urls import reverse
 from core.models import CustomUser 
+from django.contrib.auth.decorators import login_required
 
 #LANDING VIEW
 def landing(request):
@@ -40,6 +41,7 @@ def revoke_github_token(user):
         print("Error revoking GitHub token:", e)
 
 #DASHBOARD VIEW
+@login_required
 def dashboard(request):
     return render(request, 'student/Dashboard.html')
  
