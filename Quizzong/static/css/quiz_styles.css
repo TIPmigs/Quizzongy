@@ -39,6 +39,10 @@
     padding-bottom: 1rem;
   }
 
+  .course-card input, textarea {
+  color: black;
+  }
+
   .custom-bg {
   background-color: #e8e0d9;
   }
@@ -63,6 +67,7 @@
     border-radius: 0.5rem;
     border: 1px solid #ccc;
     background-color: #e8e0d9;
+    
   }
 
   .add-question-btn {
