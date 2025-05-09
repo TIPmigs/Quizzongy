@@ -1,0 +1,107 @@
+{% extends 'quizbase.html' %}
+{% block title %} Quiz List {% endblock %}
+{% block styles %}
+<style>
+    .header {
+      background-color: #4a444a;
+      color: white;
+      padding: 1rem 2rem;
+      border-bottom: 5px solid #4a444a;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .avatar {
+      background-color: #4a444a;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff7f0;
+      font-size: 1.2rem;
+    }
+
+    .nav-tabs .nav-link.active {
+      border: none;
+      background-color: transparent;
+      border-bottom: 5px solid #4a444a;
+      color: #4a444a;
+    }
+
+    .nav-tabs .nav-link {
+      border: none;
+      color: #4a444a;
+    }
+
+    .quiz-card {
+      border-top: 2px dashed #4a444a;
+      border-bottom: 2px dashed #4a444a;
+      padding: 1rem 0;
+      margin-top: 1rem;
+    }
+
+    .btn-purple {
+      background-color: #4a444a;
+      color: #fff6e5;
+      font-weight: bold;
+      border-radius: 1rem;
+    }
+
+    a {
+      text-decoration: none;
+      color: #4a444a;
+    }
+
+    a:hover {
+      color: #2c2c2c;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<div class="header">
+    <h4 class="mb-0">Quiz List</h4>
+    <div class="avatar">
+      <i class="bi bi-person-fill"></i>
+    </div>
+</div>
+
+<div class="container mt-4">
+    <ul class="nav nav-tabs tab-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="#">Courses</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="#">Quizzes</a>
+      </li>
+    </ul>
+
+    <div class="mt-4">
+      <h5>Quizzes Available</h5>
+      <p>You currently have no quizzes available!</p>
+
+      <div class="quiz-card custom-bg d-flex justify-content-between align-items-center p-3 rounded">
+        <div>
+            <h6 class="mb-0"><strong>Quiz 1: Introduction to Mobile Computing</strong></h6>
+            <p class="mb-0"><a href="#">CIT 306 - IT32S1</a></p>
+        </div>
+        <button class="btn btn-purple">Take Quiz →</button>
+      </div>
+
+      <div class="mt-4">
+        <h5 class="d-flex justify-content-between">
+          <span>My Quizzes</span>
+          <span>Total: 5</span>
+        </h5>
+
+        <div class="quiz-card custom-bg p-3 rounded">
+          <h6><strong>Quiz 2: Advanced Networking</strong></h6>
+          <p><a href="#">CIT 307 - IT32S2</a></p>
+          <p>By: <a href="#">Kalbo</a></p>
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock %}

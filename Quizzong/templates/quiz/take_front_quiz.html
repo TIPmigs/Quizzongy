@@ -1,0 +1,112 @@
+{% extends 'quizbase.html' %}
+{% block title %} {{ quiz.title }} {% endblock %}
+{% block styles %}
+<style>
+    .avatar {
+      background-color: #4a444a;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff7f0;
+      font-size: 1.2rem;
+    }
+
+    .quiz-card {
+  background-color: #e8e0d9;
+  border-radius: 1rem;
+  padding: 3rem;
+  margin-top: 2rem;
+  border-top: 2px dashed #4a444a;
+  border-bottom: 2px dashed #4a444a;
+  }
+
+  .quiz-title {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+  }
+
+  .quiz-description {
+    margin-top: 1.5rem;
+    margin-bottom: 2.5rem;
+    font-size: 1.5rem;
+    line-height: 1.8;
+  }
+
+  .quiz-details {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  .quiz-detail-item {
+    flex: 1 1 220px;
+  }
+
+  .quiz-detail-item label {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  .quiz-detail-item span {
+    font-size: 1.4rem;
+  }
+
+  .btn-purple {
+    background-color: #4a444a;
+    color: #fff6e5;
+    font-weight: bold;
+    border-radius: 1rem;
+    padding: 1rem 2.5rem;
+    font-size: 1.5rem;
+    margin-top: 2rem;
+  }
+
+
+    .btn-purple:hover {
+      opacity: 0.9;
+    }
+
+    
+  </style>
+{% endblock %}
+{% block content %}
+<div class="header">
+    <h4 class="mb-0"> {{ quiz.title }} </h4>
+</div>
+  <div class="d-flex justify-content-center align-items-center mt-2" style="min-height: 80vh;">
+    <div class="quiz-card custom-bg text-center p-4 rounded" style="width: 75vw; height: 55vh; overflow-y: auto;">
+      <div class="quiz-title">Quiz Title</div>
+      <div class="quiz-description">
+        <p><strong>Description:</strong> {{ quiz.description }} </p>
+      </div>
+
+      <div class="quiz-details">
+        <div class="quiz-detail-item">
+          <label>Available:</label><br>
+          <span>{{ quiz.available_from }}</span>
+        </div>
+        <div class="quiz-detail-item">
+          <label>Due Date:</label><br>
+          <span>{{ quiz.due_date }}</span>
+        </div>
+        <div class="quiz-detail-item">
+          <label>Time Limit:</label><br>
+          <span>{{ quiz.time_limit }}</span>
+        </div>
+        <div class="quiz-detail-item">
+          <label>Total Points:</label><br>
+          <span>{{ quiz.get_total_points }}</span>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-center mt-4">
+        <button class="btn btn-purple">Start Quiz</button>
+      </div>    
+    </div>
+  </div>
+  {% endblock %}

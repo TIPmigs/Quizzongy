@@ -2,10 +2,11 @@
 {% block title %}Create/Edit Quiz{% endblock %}
 {% block content %}
   <div class="header">
-    <h4 class="mb-0">Admin's View</h4>
-    <div class="avatar">
-      <i class="bi bi-person-fill"></i>
-    </div>
+      {% if not quiz %}
+      <h2 class="my-0">Create Quiz</h2>
+      {% else %}
+      <h2>Edit Quiz: {{ quiz.title }}</h2>
+      {% endif %}
   </div>
 
   <form method="post">
@@ -27,12 +28,6 @@
     {% endif %}
 
     <div class="container mt-4">
-      {% if not quiz %}
-      <h2>Create Quiz</h2>
-      {% else %}
-      <h2>Edit Quiz: {{ quiz.title }}</h2>
-      {% endif %}
-      <div class="dashed"></div>
       <div class="row">
         <div class="col-md-6">
           <div class="course-card">

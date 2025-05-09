@@ -79,3 +79,11 @@ def custom_login_view(request):
             })
 
     return render(request, 'authentication/login.html', {'form': {}})
+
+# COURSE VIEW (STATIC)
+def course_view_list(request):
+    return render(request, 'courses/course_list.html')
+
+# QUIZ VIEW (STATIC)
+def quiz_view_list(request):
+    return render(request, 'quiz/quiz_list.html')

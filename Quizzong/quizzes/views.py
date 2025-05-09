@@ -57,5 +57,9 @@ def admin_quiz_update_view(request, id=None):
     return render(request, "quiz/create_update_quiz.html",  context)
 
 @login_required
-def quiz_update_view():
-    return
+def quiz_view(request, id=None):
+    quiz = get_object_or_404(Quiz, id=id)
+    context = {
+        "quiz": quiz,
+    }
+    return render(request, "quiz/take_front_quiz.html", context)

@@ -17,14 +17,18 @@ class Quiz(models.Model):
         verbose_name = "Quiz"
         verbose_name_plural = "Quizzes"
 
-    def get_absolute_url(self):
-        return reverse("quiz_detail", kwargs={"id": self.id})
-
     def clean(self):
         if self.available_from > self.due_date:
             raise ValidationError("'Available from' cannot be after the due date.")
         if self.available_until < self.due_date:
-            raise ValidationError("'Available until' cannot be before the due date.")
+            raise ValidationError("'Available until' cannot be before the due date.")    
+
+    def get_total_points(self):
+        total = self.questions.aggregate(total=models.Sum('points'))['total'] or 0
+        return f"{total} pts"
+
+    def get_absolute_url(self):
+        return reverse("edit_quiz", kwargs={"id": self.id})
 
     def __str__(self):
         return self.title
