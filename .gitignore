@@ -3,9 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 # Ignore __pycache__ folders
-Quizzong/core/__pycache__/
-Quizzong/quizzes/__pycache__/
-Quizzong/Quizzong/__pycache__/
+Quizzongy/Quizzong/core/__pycache__/
+Quizzongy/Quizzong/quizzes/__pycache__/
+Quizzongy/Quizzong/Quizzong/__pycache__/
 
 # C extensions
 *.so
@@ -164,4 +164,3 @@ cython_debug/
 #.idea/
 *.pyc
 *.pyc
-/Quizzong
