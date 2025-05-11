@@ -2,10 +2,6 @@
 __pycache__/
 *.py[cod]
 *$py.class
-# Ignore __pycache__ folders
-Quizzongy/Quizzong/core/__pycache__/
-Quizzongy/Quizzong/quizzes/__pycache__/
-Quizzongy/Quizzong/Quizzong/__pycache__/
 
 # C extensions
 *.so
