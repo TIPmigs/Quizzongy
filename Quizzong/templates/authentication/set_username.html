@@ -1,0 +1,9 @@
+<h2>Choose Your Username</h2>
+<form method="POST">
+    {% csrf_token %}
+    <input type="text" name="username" required placeholder="Enter username" value="{{ default_username }}">
+    {% if error %}
+      <p style="color:red;">{{ error }}</p>
+    {% endif %}
+    <button type="submit">Continue</button>
+</form>

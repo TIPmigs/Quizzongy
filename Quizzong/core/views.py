@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import logout, authenticate, login
+from django.contrib.auth import logout, authenticate, login, get_user_model
 from social_django.models import UserSocialAuth
 import requests 
 from django.conf import settings
@@ -80,10 +80,44 @@ def custom_login_view(request):
 
     return render(request, 'authentication/login.html', {'form': {}})
 
-# COURSE VIEW (STATIC)
-def course_view_list(request):
-    return render(request, 'courses/course_list.html')
+UserModel = get_user_model()
 
-# QUIZ VIEW (STATIC)
-def quiz_view_list(request):
-    return render(request, 'quiz/quiz_list.html')
+def generate_unique_username(base_username):
+    username = base_username
+    counter = 1
+    while UserModel.objects.filter(username=username).exists():
+        username = f"{base_username}{counter}"
+        counter += 1
+    return username
+
+@login_required
+def set_username(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+
+        if UserModel.objects.filter(username=username).exists():
+            return render(request, 'authentication/set_username.html', {
+                'error': 'Username already taken.',
+                'default_username': username,
+            })
+
+        request.user.username = username
+        request.user.username_set = True  # Mark that the user has set their username
+        request.user.save()
+
+        return redirect('social:complete', backend='github')
+
+    # GET request – suggest available GitHub handle
+    default_username = ''
+    if not request.user.username_set:  # Only prompt if username isn't set yet
+        try:
+            github_data = request.user.social_auth.get(provider='github').extra_data
+            github_login = github_data.get('login', '')
+            if github_login:
+                default_username = generate_unique_username(github_login)
+        except UserSocialAuth.DoesNotExist:
+            pass
+
+    return render(request, 'authentication/set_username.html', {
+        'default_username': default_username
+    })
