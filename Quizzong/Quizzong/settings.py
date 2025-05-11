@@ -153,6 +153,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SOCIAL_AUTH_GITHUB_KEY = os.getenv('GITHUB_CLIENT_ID')
 SOCIAL_AUTH_GITHUB_SECRET = os.getenv('GITHUB_CLIENT_SECRET')
 
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
 SOCIAL_AUTH_GITHUB_AUTH_EXTRA_ARGUMENTS = {
     'auth_type': 'rerequest'
@@ -161,19 +162,16 @@ SOCIAL_AUTH_GITHUB_AUTH_EXTRA_ARGUMENTS = {
 SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.social_details',
     'social_core.pipeline.social_auth.social_uid',
-    'social_core.pipeline.social_auth.auth_allowed',
+    'core.pipeline.github_auth.associate_by_github_id',  # Your custom GitHub logic
     'social_core.pipeline.social_auth.social_user',
-    'social_core.pipeline.user.get_username',
-    'social_core.pipeline.user.create_user',
-
-    # 🔽 Your custom pipeline goes here
-    'core.pipeline.check_username',
-
-    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.auth_allowed',
+    'social_core.pipeline.user.get_username',  # Getting username from GitHub or social auth
+    'core.pipeline.github_auth.check_username',  # Ensure this is placed after get_username
+    'social_core.pipeline.user.create_user',  # This is where a new user is created
     'social_core.pipeline.social_auth.load_extra_data',
+    'core.pipeline.github_auth.save_github_id',  # Optional: Saving the GitHub ID
     'social_core.pipeline.user.user_details',
 )
-
 
 LOGIN_REDIRECT_URL = '/dashboard'
 LOGOUT_REDIRECT_URL = '/'

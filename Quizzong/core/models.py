@@ -30,8 +30,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=255, unique=True)
     name = models.CharField(max_length=70, blank=True)
 
-    github_username = models.CharField(max_length=100, blank=True, null=True)
-    github_id = models.CharField(max_length=100, blank=True, null=True)
+    github_id = models.CharField(max_length=100, blank=True, null=True, unique=True)
 
     username_set = models.BooleanField(default=False)
 
@@ -46,4 +45,4 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['username']
 
     def __str__(self):
-        return self.email or self.username
+        return self.username

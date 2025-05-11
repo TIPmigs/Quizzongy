@@ -37,3 +37,14 @@ def save_github_id(backend, user, response, *args, **kwargs):
         user.github_id = github_id
         user.save()
 
+
+
+def associate_by_github_id(strategy, details, backend, uid, user=None, *args, **kwargs):
+    from core.models import CustomUser
+
+    if backend.name == 'github':
+        try:
+            existing_user = CustomUser.objects.get(github_id=uid)
+            return {'is_new': False, 'user': existing_user}
+        except CustomUser.DoesNotExist:
+            return None
