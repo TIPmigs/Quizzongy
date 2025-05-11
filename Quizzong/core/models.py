@@ -1,7 +1,5 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
-from django.core.exceptions import ValidationError
-from django.urls import reverse
 
 # Create a custom UserManager to manage the user creation
 class CustomUserManager(BaseUserManager):
@@ -26,7 +24,6 @@ class CustomUserManager(BaseUserManager):
         extra_fields.setdefault('is_superuser', True)
 
         return self.create_user(email, username, password, **extra_fields)
-
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True, null=True, blank=True) 
